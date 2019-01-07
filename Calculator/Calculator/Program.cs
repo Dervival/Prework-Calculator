@@ -10,10 +10,7 @@ namespace Calculator
             Console.WriteLine("Please input a basic arithmetic function (+,-,*,/)");
             string userInput = Console.ReadLine();
             string[] parsedInput = userInput.Split(" ");
-            //for(int i = 0; i < parsedInput.Length; i++)
-            //{
-            //    Console.WriteLine(parsedInput[i]);
-            //}
+
             //there should be an odd number indices; each even index should contain an string that can be converted to an int, each odd should be a command
             //Console.WriteLine(parsedInput.Length);
             if ((parsedInput.Length % 2) == 1)
@@ -35,18 +32,6 @@ namespace Calculator
                 }
                 Console.WriteLine("Calculated answer: " + calc(first, parsedInput[1], second));
                 Console.ReadLine();
-                //bool valid = Int32.TryParse(parsedInput[0], out first) && Int32.TryParse(parsedInput[1].Substring(1), out second);
-                //if (valid)
-                //{
-                //    Console.WriteLine("Calculated answer: " + calc(first, parsedInput[1], second));
-                //    Console.ReadLine();
-                //}
-                //else
-                //{
-                //    Console.WriteLine("Something went wrong. attempted to solve " + parsedInput[0] + parsedInput[1] + parsedInput[2]);
-                //    Console.WriteLine("using " + first + parsedInput[1] + second);
-                //    Console.ReadLine();
-                //}
             }
             else
             {
