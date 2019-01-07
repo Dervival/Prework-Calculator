@@ -16,37 +16,18 @@ namespace Calculator
             if ((parsedInput.Length % 2) == 1)
             {
                 //Basic syntax seems valid
-                for(int i = 0; i < parsedInput.Length; i++)
-                {
-                    ////due to splitting on " ", every value past the first will have an extra space
-                    //if(i > 0 && i % 2 == 0)
+                //debug for seeing parsed input array before any computation is done
+                    //Console.Write("Parsed input: [");
+                    //for(int i = 0; i < parsedInput.Length-1; i++)
                     //{
-                    //    parsedInput[i] = parsedInput[i].Substring(1);
+                    //    Console.Write(parsedInput[i] + ",");
                     //}
-                }
-                Console.Write("Parsed input: [");
-                for(int i = 0; i < parsedInput.Length-1; i++)
-                {
-                    Console.Write(parsedInput[i] + ",");
-                }
-                Console.WriteLine(parsedInput[parsedInput.Length - 1] + "]");
-                Console.ReadLine();
+                    //Console.WriteLine(parsedInput[parsedInput.Length - 1] + "]");
+                    //Console.ReadLine();
+                //multDivArray should be the array after both multiplication and division are done
                 string[] multDivArray = multDivPassThrough(parsedInput);
+                //finalResult should be an array of length 1, whose contents are the final calculated value
                 string[] finalResult = addSubPassThrough(multDivArray);
-                //int first = 0;
-                //bool validFirst = Int32.TryParse(parsedInput[0], out first);
-                //while (!validFirst)
-                //{
-                //    parsedInput[0] = parsedInput[0].Substring(1);
-                //    validFirst = Int32.TryParse(parsedInput[0], out first);
-                //}
-                //int second = 0;
-                //bool validSecond = Int32.TryParse(parsedInput[2], out second);
-                //while (!validSecond)
-                //{
-                //    parsedInput[2] = parsedInput[2].Substring(1);
-                //    validSecond = Int32.TryParse(parsedInput[2], out second);
-                //}
                 Console.WriteLine("Calculated answer: " + finalResult[0]);
                 Console.ReadLine();
             }
@@ -71,17 +52,21 @@ namespace Calculator
                         //multiplication
                         string[] newArray = new string[array.Length - 2];
                         //left subarray 
-                        for(int j = 0; j < i-2; j++)
+                        for (int j = 0; j < i - 1; j++)
                         {
                             newArray[j] = array[j];
                         }
                         //merged center "subarray" (only the single value)
-                        newArray[i-1] = calc(Int32.Parse(array[i - 1]), array[i], Int32.Parse(array[i + 2])).ToString();
+                        Int32.TryParse(array[i - 1], out int firstVal);
+                        Int32.TryParse(array[i + 1], out int secondVal);
+                        int newVal = calc(firstVal, array[i], secondVal);
+                        newArray[i - 1] = newVal.ToString();
                         //right subarray
-                        for (int j = i; j < array.Length-2; j++)
+                        for (int j = i; j < array.Length - 2; j++)
                         {
                             newArray[j] = array[j + 2];
                         }
+                        //reset the computation to the start of the array again
                         array = newArray;
                         i = 0;
                     }
@@ -90,17 +75,21 @@ namespace Calculator
                         //division
                         string[] newArray = new string[array.Length - 2];
                         //left subarray 
-                        for (int j = 0; j < i - 2; j++)
+                        for (int j = 0; j < i - 1; j++)
                         {
                             newArray[j] = array[j];
                         }
                         //merged center "subarray" (only the single value)
-                        newArray[i - 1] = calc(Int32.Parse(array[i - 1]), array[i], Int32.Parse(array[i + 2])).ToString();
+                        Int32.TryParse(array[i - 1], out int firstVal);
+                        Int32.TryParse(array[i + 1], out int secondVal);
+                        int newVal = calc(firstVal, array[i], secondVal);
+                        newArray[i - 1] = newVal.ToString();
                         //right subarray
                         for (int j = i; j < array.Length - 2; j++)
                         {
                             newArray[j] = array[j + 2];
                         }
+                        //reset the computation to the start of the array again
                         array = newArray;
                         i = 0;
                     }
@@ -121,29 +110,22 @@ namespace Calculator
                         //addition
                         string[] newArray = new string[array.Length - 2];
                         //left subarray 
-                        for (int j = 0; j < i - 2; j++)
+                        for (int j = 0; j < i - 1; j++)
                         {
                             newArray[j] = array[j];
                         }
                         //merged center "subarray" (only the single value)
-                        Console.WriteLine("Attempting to do the following: " + array[i - 1] + array[i] + array[i + 1]);
                         Int32.TryParse(array[i - 1], out int firstVal);
                         Int32.TryParse(array[i + 1], out int secondVal);
                         int newVal = calc(firstVal, array[i], secondVal);
-                        Console.WriteLine("Resulted in " + newVal);
                         newArray[i - 1] = newVal.ToString();
                         //right subarray
                         for (int j = i; j < array.Length - 2; j++)
                         {
                             newArray[j] = array[j + 2];
                         }
+                        //reset the computation to the start of the array again
                         array = newArray;
-                        Console.Write("array now: [");
-                        for (int j = 0; j < array.Length - 1; j++)
-                        {
-                            Console.Write(array[j] + ",");
-                        }
-                        Console.WriteLine(array[array.Length - 1] + "]");
                         i = 0;
                     }
                     if (array[i] == "-")
@@ -151,17 +133,21 @@ namespace Calculator
                         //subtraction
                         string[] newArray = new string[array.Length - 2];
                         //left subarray 
-                        for (int j = 0; j < i - 2; j++)
+                        for (int j = 0; j < i - 1; j++)
                         {
                             newArray[j] = array[j];
                         }
                         //merged center "subarray" (only the single value)
-                        newArray[i - 1] = calc(Int32.Parse(array[i - 1]), array[i], Int32.Parse(array[i + 2])).ToString();
+                        Int32.TryParse(array[i - 1], out int firstVal);
+                        Int32.TryParse(array[i + 1], out int secondVal);
+                        int newVal = calc(firstVal, array[i], secondVal);
+                        newArray[i - 1] = newVal.ToString();
                         //right subarray
                         for (int j = i; j < array.Length - 2; j++)
                         {
                             newArray[j] = array[j + 2];
                         }
+                        //reset the computation to the start of the array again
                         array = newArray;
                         i = 0;
                     }
